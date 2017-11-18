@@ -1,0 +1,63 @@
+// MongoDB JSON schema 
+
+Users will be able to search based on location for food, arts&entertainment, or hotel&travel. The user will be able to filter search results based on price(lowest first) or ratings(highest first), and the user will also be able to filter based on results within a certain distance (radius up to 25 miles).
+
+Mandatory: email, activities.location.city, activities.location.state, object.type
+
+{
+    “users”:[ 			       // an array of users who use Woku
+        {
+            “email”: “user_email”,    // will be the unique identifier/ key 
+	     “password”: “password”,  // optional, only if user did not use oauth
+            “activities”:[	       // an array of all locations searched
+                {
+                    “location”: [“city”: “city name”, “state”: “state name”, “code”: “geo-code or null”],   // geo-code is optional 
+                    “object”: {
+                        “type”: “food / arts and entertainment / hotel and travel”, // will be one of 3 types   					  
+			  “type of filter”: {“type”: “rating / price”, “radius”: “0-25”} // filters are optional
+                    }
+                }    
+           ]
+        }
+    ]
+}
+
+e.g
+
+{
+    “users”:[
+        {
+            “email”:“user1@bu.edu”,
+	     “password”: “”,
+            “activities”:[
+                {
+                    “location”: [“city”: “Boston”, “state”: “MA”, “code”: “null”],
+                    “object”: {
+                        “type”: “food”,
+                        “type of filter”: {“type”:“rating”, “radius”:“4”}
+                    }
+                },
+                {
+                    “location”: [“city”: “New York”, “state”: “NY”, “code”:”40.730610, -73.935242”],
+                    “object”: {
+                        “type”: “arts & entertainment”,
+                        “type of filter”: {“type”:“rating”, “radius”:“10”}
+                    }
+                }
+            ]
+        },
+        {
+            “email”:“user2@bu.edu”,
+            “password”: “hello”,
+            “activities”:[
+                {
+                    “location”: [“city”: “Allston”, “state”:”MA”, “code”:”42.3584304, -71.1258861”],
+                    “object”: {
+                        “type”: “hotel and travel”,
+                        “type of filter”: {“type”:“price”, “radius”:“2"}
+                    }
+                }    
+           ]
+        }
+    ]
+}
