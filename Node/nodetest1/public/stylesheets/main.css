@@ -28,6 +28,11 @@ button {
   padding:1em;
 }
 
+button:focus{
+  border: #1a237e;
+  background: #3d5afe;
+}
+
 p{
   font-size: 1.3em;
 }

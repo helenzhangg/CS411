@@ -48,6 +48,31 @@ router.post('/adduser', function(req, res) {
         }
     });
 });
+
+router.post('/addchoice', function (req,res) {
+
+  var db = req.db;
+  // console.log(req.params.id);
+  // var choice = req.param('name');
+  var choice = req.body.choice;
+  // var choice = document.getElementById('choice').value;
+  console.log("bye");
+  var collection = db.get('usercollection');
+  collection.insert({
+    "type": choice},
+    function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            res.redirect("userlist");
+        }
+  });
+
+});
+
 module.exports = router;
 
 /* GET Userlist page. */

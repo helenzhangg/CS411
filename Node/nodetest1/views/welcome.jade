@@ -8,14 +8,16 @@ html
       block content
         h1= "Welcome to Woku AI!"
         p What are you looking for?
-        button(
-        type='submit'
-        onclick="if you plan to use single quotes here, use double quotes outer"
-        ) Food
-        button(
-        type='submit'
-        onclick="if you plan to use single quotes here, use double quotes outer"
-        ) Arts and Entertainment
+        form#hello(name="addchoice", method="post",action='/addchoice')
+          button#food(
+          name='choice'
+          type='submit'
+          value='food') Food
+        form#hello(name="addchoice", method="post",action='/addchoice')
+          button#arts(
+          type='submit'
+          name='choice'
+          value='arts and entertainment') Arts and Entertainment
 
         button(
         type='submit'
