@@ -7,7 +7,7 @@ body {
   padding: 50px;
   /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
   text-align: center;
-  background: #bbdefb;
+  background: #90caf9;
 }
 
 a {
@@ -47,4 +47,8 @@ form{
 
 span.card-title.title{
   font-size: 3em;
+}
+
+#woku{
+  max-width: 300px;
 }
