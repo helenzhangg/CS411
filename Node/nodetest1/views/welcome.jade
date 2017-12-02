@@ -6,20 +6,26 @@ html
 
     body
       block content
+        .row
+          .col.s12.m4
+            .card.blue.lighten-5
+              .card-content.black-text
+                span.card-title.title Woku
+                p I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.
         h1= "Welcome to Woku AI!"
         p What are you looking for?
         form#hello(name="addchoice", method="post",action='/addchoice')
-          button#food(
+          button.choice(
           name='choice'
           type='submit'
           value='food') Food
         form#hello(name="addchoice", method="post",action='/addchoice')
-          button#arts(
+          button.choice(
           type='submit'
           name='choice'
           value='arts and entertainment') Arts and Entertainment
 
-        button(
+        button.choice(
         type='submit'
         onclick="if you plan to use single quotes here, use double quotes outer"
         ) Hotels and Travel
