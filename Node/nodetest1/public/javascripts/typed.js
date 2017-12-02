@@ -6,18 +6,21 @@
 
 $(function(){
 	$(".typed").typed({
-		strings: ["Hello, I am Woku :)", "I can help you explore places in your budget", "Try me out!"],
+		strings: ["Hello, I'm Woku :)", "I can help you explore places.", "Just put in your budget, location, and activity to start!", "Try me out :)"],
 		// Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
 		stringsElement: null,
 		// typing speed
-		typeSpeed: 30,
+		typeSpeed: 35,
 		// time before typing starts
-		startDelay: 1200,
+		startDelay: 1600,
 		// backspacing speed
-		backSpeed: 20,
+		backSpeed: 5,
 		// time before backspacing
-		backDelay: 500,
+		backDelay: 1200,
 		// loop
+    // fadeOut: true,
+    // fadeOutClass: 'typed-fade-out',
+    // fadeOutDelay: 500,
 		loop: true,
 		// false = infinite
 		loopCount: 1,
@@ -38,4 +41,8 @@ $(function(){
 		// callback for reset
 		resetCallback: function() {}
 	});
+});
+
+$(document).ready(function() {
+  $('#start').hide().delay(20000).fadeIn(2200);
 });

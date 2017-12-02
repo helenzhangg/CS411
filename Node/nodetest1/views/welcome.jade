@@ -8,15 +8,16 @@ html
       block content
         .row
           .col.s12.m4
-            .card.blue.lighten-5
+            .card.shadow.blue.lighten-5
               .card-content.black-text
                 span.card-title.title Woku
                 hr
-                p Discovery on a budget!
                 img#woku(src='/images/woku.png', alt='')
                 br
-                span.typed
+                div.typed_wrap
+                  span.typed
                 br
+                button.choice#start Let's Go!
         h1= "Welcome to Woku AI!"
         p What are you looking for?
         form#hello(name="addchoice", method="post",action='/addchoice')
