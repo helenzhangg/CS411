@@ -1,19 +1,29 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const passport = require('passport')
 
 // Connecting MongoDB
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
-var index = require('./routes/index');
-var users = require('./routes/users');
+const mongo = require('mongodb');
+const monk = require('monk');
+const db = monk('localhost:27017/nodetest1');
+const index = require('./routes/index');
+const users = require('./routes/users');
+// const api = require('./routes/api')
+// const auth = require('./routes/authTwitter')
 
-var app = express();
+
+const app = express();
+
+//use flash with passport to pop up messages
+const flash = require('connect-flash')
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
