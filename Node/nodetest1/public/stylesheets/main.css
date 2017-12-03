@@ -25,12 +25,12 @@ button {
   border:none;
   font-size: 1.3em;
   margin: .3em;
-  padding:1em;
+  padding:.8em;
 }
 .choice{
   color:white;
-  margin: 1em;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  margin: .5em;
+  box-shadow:0 10px 30px 0 rgba(0,0,0,0.19);
   font-size: 1.3em;
 }
 
@@ -125,4 +125,18 @@ span.card-title.title{
 
 #start{
   margin-top: -200px;
+}
+
+input::placeholder{ /* Chrome/Opera/Safari */
+  color: grey;
+}
+
+label.form{
+  text-align: left;
+  font-size: 1.4em;
+  margin-top: .6em;
+}
+
+table.bordered#prices td{
+  padding: .3em;
 }

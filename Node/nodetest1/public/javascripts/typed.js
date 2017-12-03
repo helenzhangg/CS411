@@ -46,3 +46,7 @@ $(function(){
 $(document).ready(function() {
   $('#start').hide().delay(20000).fadeIn(2200);
 });
+
+$("#start").click(function(){
+    $("p").show();
+});
