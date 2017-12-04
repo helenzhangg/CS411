@@ -6,26 +6,28 @@ html
 
     body
       block content
-        .row
-          .col.s12.m4
-            .card.shadow.blue.lighten-5
-              .card-content.black-text
-                span.card-title.title Woku
-                hr
-                img#woku(src='/images/woku.png', alt='')
-                br
-                div.typed_wrap
-                  span.typed
-                br
-                button.choice#start Let's Go!
-          form#api(name="addchoices", method="post",action='/api')
-            div#choices
+        form#api(name="addchoices", method="post",action='/api')
+          .row
+            .col.s12.m4
+              .card.shadow.blue.lighten-5
+                .card-content.black-text
+                  span.card-title.title Woku
+                  hr
+                  img#woku(src='/images/woku.png', alt='')
+                  br
+                  div.typed_wrap
+                    span.typed
+                  br
+                  button.button#go
+                    span Let's Go!
+
+            div#location
               .col.s12.m4
                 .card.shadow.blue.lighten-5
                   .card-content.black-text
                     span.card-title.title Location
                     hr
-                    p Where would you like to explore?
+                    p#cardp Where would you like to explore?
                     input#userCity(type="text",placeholder="Ex.Boston",name="city")
                     label.form City
                     input#userState(type="text",placeholder="Ex.MA",name="state")
@@ -56,7 +58,7 @@ html
 
                     br
 
-                    div#radio
+                    div#radioprices
                       input.choice(type='radio' name='pricechoice' value='1')#price1
                       label.form(for='price1') $
                       input.choice(type='radio' name='pricechoice' value='2')#price2
@@ -66,7 +68,34 @@ html
                       input.choice(type='radio' name='pricechoice' value='4')#price4
                       label.form(for='price4') $$$$
 
-                  button.choice(type='submit' name= 'done') submit
+          div#activity
+            .row
+              .col.s4.offset-s0
+                .card.shadow.blue.lighten-5
+                  .card-content.black-text
+                    span.card-title.title Activities
+                    hr
+                    p What do you want to find?
+                    div#radioactivity
+                      input.choice(type='radio' name='activitychoice' value='food')#act1
+                      label.form(for='act1') Food
+                      input.choice(type='radio' name='activitychoice' value='arts and entertainment')#act2
+                      label.form(for='act2') Arts & Entertainment
+                      input.choice(type='radio' name='activitychoice' value='travel')#act3
+                      label.form(for='act3') Travel
+
+
+                  div
+                    .col.s12
+
+
+              .col.s4.offset-s8
+                .card.shadow.blue.lighten-5#submitcard
+                  .card-content.black-text
+                    span.card-title.title Ready to explore?
+                    hr
+                    button.button#search(type='submit' name= 'done')
+                      span Search
 
 
 

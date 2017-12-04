@@ -87,7 +87,8 @@ router.post('/api', function (req,res) {
     var state = req.body.state;
     var city = req.body.city;
     var price = req.body.pricechoice;
-    console.log('check the post', state, city);
+    var activity = req.body.activitychoice;
+    console.log('check the post', state, city, price, activity);
     var results = [state, city, price];
 
     // EVENTBRITE API CALL
@@ -103,14 +104,14 @@ router.post('/api', function (req,res) {
     // from the request, write the first 5 elements to mongodb
     // store name, venue id, logo (original), description(text) start(local time) and url
 
-    request(api_call, {json:true}, function(error,response,body) {
-        if (!error && response.statusCode == 200){
-            console.log(body);
-        }
-        if (error) { return console.log(error); }
-        console.log(body.url);
-        console.log(body.explanation);
-    });
+    // request(api_call, {json:true}, function(error,response,body) {
+    //     if (!error && response.statusCode == 200){
+    //         console.log(body);
+    //     }
+    //     if (error) { return console.log(error); }
+    //     console.log(body.url);
+    //     console.log(body.explanation);
+    // });
 
 
 });

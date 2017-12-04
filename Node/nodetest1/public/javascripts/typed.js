@@ -3,6 +3,7 @@
 $(function(){
 	$(".typed").typed({
 		strings: ["Hello, I'm Woku :)", "I can help you explore places.", "Just put in your budget, location, and activity to start!", "Try me out :)"],
+        // strings: ["Hello, I'm Woku :)"],
 		// Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
 		stringsElement: null,
 		// typing speed
@@ -40,9 +41,29 @@ $(function(){
 });
 
 $(document).ready(function() {
-  $('#start').hide().delay(20000).fadeIn(2200);
+    $("#location").hide();
+    $("#budgets").hide();
+    $("#activity").hide();
+    $('#go').hide().delay(20000).fadeIn(2200);
+    $("#go").click(function(){
+        $("#location").fadeIn("slow",function(){});
+        $("#budgets").fadeIn("slow",function(){});
+        $("#activity").fadeIn("slow",function(){});
+    });
+
+    // $( "#book" ).fadeIn( "slow", function() {
+    //     // Animation complete
+    // });
 });
 
-$("#start").click(function(){
-    $("p").show();
-});
+// $(document).ready(function() {
+//   $('#go').hide().delay(20000).fadeIn(2200);
+// });
+//
+//
+// $("#go").click(function(){
+//     $("#location").show();
+//     $("#budgets").show();
+//     $("#activity").show();
+// });
+//
