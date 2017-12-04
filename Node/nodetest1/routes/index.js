@@ -93,29 +93,49 @@ router.post('/api', function (req,res) {
 
     // EVENTBRITE API CALL
     var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token=UR24GALENHRRPDT5BSZ3';
-    var location = '&location.address=' +city + state;
-    // add 'price' to api_call
-    var api_call = url_stem+location;
-    console.log(api_call);
+    var location = '&location.address=' +city + ',' + state;
 
+    // add 'price' to api_call
     // if price = 1 or 2 use price = 'free'
+    if (price==1 | price ==2){
+        var api_price = '&price=free';
+    }
     // if price = 3 or 4 use price = 'paid'
+    if (price==3 | price==4){
+        var api_price = '&price=paid';
+    }
+    var api_call = url_stem+api_price+location;
+    // console.log(api_call);
 
     // from the request, write the first 5 elements to mongodb
     // store name, venue id, logo (original), description(text) start(local time) and url
 
-    // request(api_call, {json:true}, function(error,response,body) {
-    //     if (!error && response.statusCode == 200){
-    //         console.log(body);
-    //     }
-    //     if (error) { return console.log(error); }
-    //     console.log(body.url);
-    //     console.log(body.explanation);
-    // });
+    var evt_name = [];
+    var evt_venue = [];
+    var evt_logo = [];
+    var evt_des = [];
+    var evt_str = [];
+    var evt_url = [];
+    request(api_call, {json:true}, function(error,response,body) {
+        if (!error && response.statusCode == 200){
+            for (let item of body.events) {
+                evt_name.push(item.name.text);
+                evt_venue.push(item.venue_id);
+                // evt_logo.push(item.logo.original);
+                evt_des.push(item.description.text);
+                evt_str.push(item.start.local);
+                evt_url.push(item.url);
+
+            }
+            // console.log(evt_logo)
+        }
+        if (error) { return console.log(error); }
+        // console.log(body.url);
+        // console.log(body.explanation);
+    });
 
 
 });
-
 
 
 

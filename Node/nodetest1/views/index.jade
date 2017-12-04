@@ -1,5 +1,121 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+doctype html
+html
+  head
+
+  body
+    block content
+      form#api(name="addchoices", method="post",action='/api')
+        .row
+          .col.s12.m4
+            .card.shadow.blue.lighten-5
+              .card-content.black-text
+                span.card-title.title Woku
+                hr
+                img#woku(src='/images/woku.png', alt='')
+                br
+                div.typed_wrap
+                  span.typed
+                br
+                button.button#go
+                  span Let's Go!
+
+          div#location
+            .col.s12.m4
+              .card.shadow.blue.lighten-5
+                .card-content.black-text
+                  span.card-title.title Location
+                  hr
+                  p#cardp Where would you like to explore?
+                  input#userCity(type="text",placeholder="Ex.Boston",name="city")
+                  label.form City
+                  input#userState(type="text",placeholder="Ex.MA",name="state")
+                  label.form State
+          div#budgets
+            .col.s12.m4
+              .card.shadow.blue.lighten-5
+                .card-content.black-text
+                  span.card-title.title Budget
+                  hr
+                  p What is your budget?
+                  table.bordered#prices
+                    tr
+                      th Price Range
+                      th Symbol
+                    tr
+                      td Under $10
+                      td $
+                    tr
+                      td $10-$30
+                      td $$
+                    tr
+                      td $30-60
+                      td $$$
+                    tr
+                      td More than $60
+                      td  $$$$
+
+                  br
+
+                  div#radioprices
+                    input.choice(type='radio' name='pricechoice' value='1')#price1
+                    label.form(for='price1') $
+                    input.choice(type='radio' name='pricechoice' value='2')#price2
+                    label.form(for='price2') $$
+                    input.choice(type='radio' name='pricechoice' value='3')#price3
+                    label.form(for='price3') $$$
+                    input.choice(type='radio' name='pricechoice' value='4')#price4
+                    label.form(for='price4') $$$$
+
+        div#activity
+          .row
+            .col.s4.offset-s0
+              .card.shadow.blue.lighten-5
+                .card-content.black-text
+                  span.card-title.title Activities
+                  hr
+                  p What do you want to find?
+                  div#radioactivity
+                    input.choice(type='radio' name='activitychoice' value='food')#act1
+                    label.form(for='act1') Food
+                    input.choice(type='radio' name='activitychoice' value='arts and entertainment')#act2
+                    label.form(for='act2') Arts & Entertainment
+                    input.choice(type='radio' name='activitychoice' value='travel')#act3
+                    label.form(for='act3') Travel
+
+
+                div
+                  .col.s12
+
+
+            .col.s4.offset-s8
+              .card.shadow.blue.lighten-5#submitcard
+                .card-content.black-text
+                  span.card-title.title Ready to explore?
+                  hr
+                  button.button#search(type='submit' name= 'done')
+                    span Search
+
+
+
+
+
+
+      h1= "Welcome to Woku AI!"
+      p What are you looking for?
+      form#hello(name="addchoice", method="post",action='/addchoice')
+        button.choice(
+        name='choice'
+        type='submit'
+        value='food') Food
+      form#hello2(name="addchoice", method="post",action='/addchoice')
+        button.choice(
+        type='submit'
+        name='choice'
+        value='arts and entertainment') Arts and Entertainment
+
+      button.choice(
+      type='submit'
+      onclick="if you plan to use single quotes here, use double quotes outer"
+      ) Hotels and Travel
