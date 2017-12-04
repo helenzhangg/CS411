@@ -110,24 +110,24 @@ router.post('/api', function (req,res) {
     // from the request, write the first 5 elements to mongodb
     // store name, venue id, logo (original), description(text) start(local time) and url
 
-    var evt_name = [];
-    var evt_venue = [];
-    var evt_logo = [];
-    var evt_des = [];
-    var evt_str = [];
-    var evt_url = [];
+    var evt_name = [];              //Event Name
+    var evt_venue = [];             //Event venue id
+    var evt_logo = [];              //Event logo
+    var evt_des = [];               //Event description
+    var evt_str = [];               //Event start time
+    var evt_url = [];               //Event url
     request(api_call, {json:true}, function(error,response,body) {
         if (!error && response.statusCode == 200){
-            for (let item of body.events) {
+            for (let item of body.events) {             //for loop append each particular value into variables
                 evt_name.push(item.name.text);
                 evt_venue.push(item.venue_id);
-                // evt_logo.push(item.logo.original);
+                // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
                 evt_des.push(item.description.text);
                 evt_str.push(item.start.local);
                 evt_url.push(item.url);
 
             }
-            // console.log(evt_logo)
+            // console.log(evt_logo)                //console for testing output of particular variables
         }
         if (error) { return console.log(error); }
         // console.log(body.url);
