@@ -137,8 +137,14 @@ input::placeholder{ /* Chrome/Opera/Safari */
 
 label.form{
   text-align: left;
-  font-size: 1.4em;
-  margin-top: .6em;
+  font-size: 1.3em;
+  margin:.4em;
+}
+
+label.price{
+    text-align: left;
+    font-size: 1.4em;
+    margin-top: .6em;
 }
 
 table.bordered#prices td{
@@ -254,7 +260,7 @@ input[type=radio]:checked ~ .check::before{
 }
 
 #activity{
-    margin-top: -350px;
+    margin-top: -260px;
 }
 
 #cardp{

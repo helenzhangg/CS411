@@ -86,6 +86,7 @@ router.post('/api', function (req,res) {
     // these variables grab value from jade by name attribute
     var state = req.body.state;
     var city = req.body.city;
+    var zip = req.body.zip;
     var price = req.body.pricechoice;
     var activity = req.body.activitychoice;
     console.log('check the post', state, city, price, activity);
@@ -93,7 +94,7 @@ router.post('/api', function (req,res) {
 
     // EVENTBRITE API CALL
     var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token=UR24GALENHRRPDT5BSZ3';
-    var location = '&location.address=' +city + ',' + state;
+    var location = '&location.address=' +city + ',' + state + '.' + zip;
 
     // add 'price' to api_call
     // if price = 1 or 2 use price = 'free'
@@ -105,7 +106,7 @@ router.post('/api', function (req,res) {
         var api_price = '&price=paid';
     }
     var api_call = url_stem+api_price+location;
-    // console.log(api_call);
+    console.log(api_call);
 
     // from the request, write the first 5 elements to mongodb
     // store name, venue id, logo (original), description(text) start(local time) and url
@@ -136,6 +137,7 @@ router.post('/api', function (req,res) {
 
 
 });
+
 
 
 
