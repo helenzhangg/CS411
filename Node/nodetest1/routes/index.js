@@ -86,6 +86,7 @@ router.post('/api', function (req,res) {
     // these variables grab value from jade by name attribute
     var state = req.body.state;
     var city = req.body.city;
+    var zip = req.body.zip;
     var price = req.body.pricechoice;
     var activity = req.body.activitychoice;
     console.log('check the post', state, city, price, activity);

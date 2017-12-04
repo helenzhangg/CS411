@@ -27,11 +27,15 @@ html
                   .card-content.black-text
                     span.card-title.title Location
                     hr
-                    p#cardp Where would you like to explore?
-                    input#userCity(type="text",placeholder="Ex.Boston",name="city")
+                    p Where would you like to explore?
+                    input#userCity(type="text",placeholder="Ex: Boston",name="city")
                     label.form City
-                    input#userState(type="text",placeholder="Ex.MA",name="state")
+                    input#userState(type="text",placeholder="Ex: MA",name="state")
                     label.form State
+                    input#userCity(type="text",placeholder="Ex: 02215",name="zip")
+                    label.form ZIP
+
+
             div#budgets
               .col.s12.m4
                 .card.shadow.blue.lighten-5
@@ -60,13 +64,13 @@ html
 
                     div#radioprices
                       input.choice(type='radio' name='pricechoice' value='1')#price1
-                      label.form(for='price1') $
+                      label.price(for='price1') $
                       input.choice(type='radio' name='pricechoice' value='2')#price2
-                      label.form(for='price2') $$
+                      label.price(for='price2') $$
                       input.choice(type='radio' name='pricechoice' value='3')#price3
-                      label.form(for='price3') $$$
+                      label.price(for='price3') $$$
                       input.choice(type='radio' name='pricechoice' value='4')#price4
-                      label.form(for='price4') $$$$
+                      label.price(for='price4') $$$$
 
           div#activity
             .row
