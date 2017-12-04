@@ -8,13 +8,6 @@ const request = require('request');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
-  // TO TEST THE REQUEST API CALL:
-
-  //   request('https://www.eventbriteapi.com/v3/events/search/?price=free&token=UR24GALENHRRPDT5BSZ3&location.address=boston, ma', { json: true }, function(error,response,body) {
-  //       if (!error && response.statusCode == 200){
-  //           res.send(body);
-  //       }
-  //   });
 });
 
 /* GET Welcome page. */
@@ -90,22 +83,27 @@ router.post('/addchoice', function (req,res) {
 
 router.post('/api', function (req,res) {
 
-    //GOOD STUFF BELOW
-    // var db = req.db;
-
+    // these variables grab value from jade by name attribute
     var state = req.body.state;
     var city = req.body.city;
     var price = req.body.pricechoice;
     console.log('check the post', state, city);
     var results = [state, city, price];
-    // res.send(results);
 
+    // EVENTBRITE API CALL
     var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token=UR24GALENHRRPDT5BSZ3';
     var location = '&location.address=' +city + state;
+    // add 'price' to api_call
     var api_call = url_stem+location;
     console.log(api_call);
+
+    // if price = 1 or 2 use price = 'free'
+    // if price = 3 or 4 use price = 'paid'
+
+    // from the request, write the first 5 elements to mongodb
+    // store name, venue id, logo (original), description(text) start(local time) and url
+
     request(api_call, {json:true}, function(error,response,body) {
-        // console.log(res);
         if (!error && response.statusCode == 200){
             console.log(body);
         }
@@ -113,6 +111,7 @@ router.post('/api', function (req,res) {
         console.log(body.url);
         console.log(body.explanation);
     });
+
 
 });
 
