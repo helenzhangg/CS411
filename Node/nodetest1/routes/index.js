@@ -140,7 +140,6 @@ router.post('/api', function (req,res) {
 
 
 
-module.exports = router;
 
 /* GET Userlist page. */
 router.get('/userlist', function(req, res) {
@@ -152,3 +151,6 @@ router.get('/userlist', function(req, res) {
         });
     });
 });
+
+
+module.exports = router;
