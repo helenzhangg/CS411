@@ -1,9 +1,20 @@
 var express = require('express');
 var router = express.Router();
+const request = require('request');
+
+
+// var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+  // TO TEST THE REQUEST API CALL:
+
+  //   request('https://www.eventbriteapi.com/v3/events/search/?price=free&token=UR24GALENHRRPDT5BSZ3&location.address=boston, ma', { json: true }, function(error,response,body) {
+  //       if (!error && response.statusCode == 200){
+  //           res.send(body);
+  //       }
+  //   });
 });
 
 /* GET Welcome page. */
@@ -15,6 +26,7 @@ router.get('/welcome', function(req, res, next) {
 router.get('/helloworld', function(req, res) {
     res.render('helloworld', { title: 'Hello, World!' });
 });
+
 /* GET New User page. */
 router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
@@ -45,17 +57,19 @@ router.post('/adduser', function(req, res) {
         else {
             // And forward to success page
             res.redirect("userlist");
+
         }
     });
+
 });
 
+
+// POST to add user's choice
 router.post('/addchoice', function (req,res) {
 
   var db = req.db;
-  // console.log(req.params.id);
-  // var choice = req.param('name');
   var choice = req.body.choice;
-  // var choice = document.getElementById('choice').value;
+
   console.log("bye");
   var collection = db.get('usercollection');
   collection.insert({
@@ -72,6 +86,39 @@ router.post('/addchoice', function (req,res) {
   });
 
 });
+
+
+router.post('/api', function (req,res) {
+
+    //GOOD STUFF BELOW
+    // var db = req.db;
+
+    var state = req.body.state;
+    var city = req.body.city;
+    var price = req.body.pricechoice;
+    console.log('check the post', state, city);
+    var results = [state, city, price];
+    // res.send(results);
+
+    var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token=UR24GALENHRRPDT5BSZ3';
+    var location = '&location.address=' +city + state;
+    var api_call = url_stem+location;
+    console.log(api_call);
+    request(api_call, {json:true}, function(error,response,body) {
+        // console.log(res);
+        if (!error && response.statusCode == 200){
+            console.log(body);
+        }
+        if (error) { return console.log(error); }
+        console.log(body.url);
+        console.log(body.explanation);
+    });
+
+});
+
+
+
+
 
 module.exports = router;
 

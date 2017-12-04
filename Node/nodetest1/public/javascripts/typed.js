@@ -1,9 +1,5 @@
 
 
-// script.
-//   var typed = new Typed('.element', {strings: ["First sentence.", "Second sentence."], typeSpeed: 30});
-
-
 $(function(){
 	$(".typed").typed({
 		strings: ["Hello, I'm Woku :)", "I can help you explore places.", "Just put in your budget, location, and activity to start!", "Try me out :)"],

@@ -18,49 +18,56 @@ html
                   span.typed
                 br
                 button.choice#start Let's Go!
-          div#choices
-            .col.s12.m4
-              .card.shadow.blue.lighten-5
-                .card-content.black-text
-                  span.card-title.title Location
-                  hr
-                  p Where would you like to explore?
-                  form
+          form#api(name="addchoices", method="post",action='/api')
+            div#choices
+              .col.s12.m4
+                .card.shadow.blue.lighten-5
+                  .card-content.black-text
+                    span.card-title.title Location
+                    hr
+                    p Where would you like to explore?
                     input#userCity(type="text",placeholder="Ex.Boston",name="city")
-                    label.form State
-                    input#userState(type="text",placeholder="Ex.MA",name="state")
                     label.form City
-          div#budgets
-            .col.s12.m4
-              .card.shadow.blue.lighten-5
-                .card-content.black-text
-                  span.card-title.title Budget
-                  hr
-                  p What is your budget?
-                  table.bordered#prices
-                    tr
-                      th Price Range
-                      th Symbol
-                    tr
-                      td Under $10
-                      td $
-                    tr
-                      td $10-$30
-                      td $$
-                    tr
-                      td $30-60
-                      td $$$
-                    tr
-                      td More than $60
-                      td  $$$$
+                    input#userState(type="text",placeholder="Ex.MA",name="state")
+                    label.form State
+            div#budgets
+              .col.s12.m4
+                .card.shadow.blue.lighten-5
+                  .card-content.black-text
+                    span.card-title.title Budget
+                    hr
+                    p What is your budget?
+                    table.bordered#prices
+                      tr
+                        th Price Range
+                        th Symbol
+                      tr
+                        td Under $10
+                        td $
+                      tr
+                        td $10-$30
+                        td $$
+                      tr
+                        td $30-60
+                        td $$$
+                      tr
+                        td More than $60
+                        td  $$$$
 
-                  form
-                    button.choice $
-                    button.choice $$
-                    button.choice $$$
-                    button.choice $$$$
+                    br
 
-                  button.choice#apiCall(type='submit') Woku Search
+                    div#radio
+                      input.choice(type='radio' name='pricechoice' value='1')#price1
+                      label.form(for='price1') $
+                      input.choice(type='radio' name='pricechoice' value='2')#price2
+                      label.form(for='price2') $$
+                      input.choice(type='radio' name='pricechoice' value='3')#price3
+                      label.form(for='price3') $$$
+                  button.choice(type='submit' name= 'done') submit
+
+
+
+
 
 
         h1= "Welcome to Woku AI!"
@@ -70,7 +77,7 @@ html
           name='choice'
           type='submit'
           value='food') Food
-        form#hello(name="addchoice", method="post",action='/addchoice')
+        form#hello2(name="addchoice", method="post",action='/addchoice')
           button.choice(
           type='submit'
           name='choice'
