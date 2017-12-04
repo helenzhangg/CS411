@@ -12,7 +12,7 @@ const monk = require('monk');
 const db = monk('localhost:27017/nodetest1');
 const index = require('./routes/index');
 const users = require('./routes/users');
-// const api = require('./routes/api')
+const api = require('./routes/api')
 // const auth = require('./routes/authTwitter')
 
 

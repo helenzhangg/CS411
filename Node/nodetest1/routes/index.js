@@ -20,6 +20,10 @@ router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
 });
 
+module.exports = router;
+
+
+
 /* POST to Add User Service */
 router.post('/adduser', function(req, res) {
 
@@ -73,7 +77,6 @@ router.post('/addchoice', function (req,res) {
 
 });
 
-module.exports = router;
 
 /* GET Userlist page. */
 router.get('/userlist', function(req, res) {
@@ -85,3 +88,5 @@ router.get('/userlist', function(req, res) {
         });
     });
 });
+
+
