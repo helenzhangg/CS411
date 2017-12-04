@@ -15,9 +15,6 @@ $(function(){
 		// time before backspacing
 		backDelay: 1200,
 		// loop
-    // fadeOut: true,
-    // fadeOutClass: 'typed-fade-out',
-    // fadeOutDelay: 500,
 		loop: true,
 		// false = infinite
 		loopCount: 1,
@@ -40,30 +37,17 @@ $(function(){
 	});
 });
 
-$(document).ready(function() {
-    $("#location").hide();
-    $("#budgets").hide();
-    $("#activity").hide();
-    $('#go').hide().delay(20000).fadeIn(2200);
-    $("#go").click(function(){
-        $("#location").fadeIn("slow",function(){});
-        $("#budgets").fadeIn("slow",function(){});
-        $("#activity").fadeIn("slow",function(){});
-    });
 
-    // $( "#book" ).fadeIn( "slow", function() {
-    //     // Animation complete
-    // });
-});
+// for the lets go button UNCOMMENT LATER
 
 // $(document).ready(function() {
-//   $('#go').hide().delay(20000).fadeIn(2200);
+//     $("#location").hide();
+//     $("#budgets").hide();
+//     $("#activity").hide();
+//     $('#go').hide().delay(20000).fadeIn(2200);
+//     $("#go").click(function(){
+//         $("#location").fadeIn("slow",function(){});
+//         $("#budgets").fadeIn("slow",function(){});
+//         $("#activity").fadeIn("slow",function(){});
+//     });
 // });
-//
-//
-// $("#go").click(function(){
-//     $("#location").show();
-//     $("#budgets").show();
-//     $("#activity").show();
-// });
-//
