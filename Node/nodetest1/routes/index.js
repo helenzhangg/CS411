@@ -113,7 +113,7 @@ router.post('/api', function (req,res) {
 
     var evt_name = [];              //Event Name
     var evt_venue = [];             //Event venue id
-    var evt_logo = [];              //Event logo
+    // var evt_logo = [];              //Event logo
     var evt_des = [];               //Event description
     var evt_str = [];               //Event start time
     var evt_url = [];               //Event url
