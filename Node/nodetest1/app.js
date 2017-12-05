@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const session = require('express-session')
+const passport = require('passport')
+
 
 
 // Connecting MongoDB
@@ -12,6 +15,10 @@ var monk = require('monk');
 var db = monk('localhost:27017/nodetest1');
 var index = require('./routes/index');
 var users = require('./routes/users');
+
+//Oauth
+const auth = require('./routes/authTwitter')
+
 
 var app = express();
 
@@ -25,7 +32,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'this is not a secret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', auth)
 
 
 // Make our db accessible to our router

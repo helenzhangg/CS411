@@ -6,6 +6,8 @@ html
 
   body
     block content
+
+
       form#api(name="addchoices", method="post",action='/api')
         .row
           .col.s12.m4
@@ -14,6 +16,13 @@ html
                 span.card-title.title Woku
                 hr
                 img#woku(src='/images/woku.png', alt='')
+
+                a(href="/auth/twitter/")
+                  button(type="button")
+                    span Login with Twitter
+                a(href="/auth/logout/")
+                  button(type="button")
+                    span Log Out
                 br
                 div.typed_wrap
                   span.typed
@@ -105,21 +114,21 @@ html
 
 
 
-
-      h1= "Welcome to Woku AI!"
-      p What are you looking for?
-      form#hello(name="addchoice", method="post",action='/addchoice')
-        button.choice(
-        name='choice'
-        type='submit'
-        value='food') Food
-      form#hello2(name="addchoice", method="post",action='/addchoice')
-        button.choice(
-        type='submit'
-        name='choice'
-        value='arts and entertainment') Arts and Entertainment
-
-      button.choice(
-      type='submit'
-      onclick="if you plan to use single quotes here, use double quotes outer"
-      ) Hotels and Travel
+      //
+      //h1= "Welcome to Woku AI!"
+      //p What are you looking for?
+      //form#hello(name="addchoice", method="post",action='/addchoice')
+      //  button.choice(
+      //  name='choice'
+      //  type='submit'
+      //  value='food') Food
+      //form#hello2(name="addchoice", method="post",action='/addchoice')
+      //  button.choice(
+      //  type='submit'
+      //  name='choice'
+      //  value='arts and entertainment') Arts and Entertainment
+      //
+      //button.choice(
+      //type='submit'
+      //onclick="if you plan to use single quotes here, use double quotes outer"
+      //) Hotels and Travel

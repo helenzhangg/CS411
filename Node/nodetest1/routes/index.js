@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const request = require('request');
 const evtbrt = require('../config/Eventbrite')
+const ylp = require('../config/yelp')
 
 
 // var request = require('request');
@@ -25,6 +26,46 @@ router.get('/helloworld', function(req, res) {
 router.get('/newuser', function(req, res) {
     res.render('newuser', { title: 'Add New User' });
 });
+
+////////////////////////////////////////
+//This is Sibo's OAuth part
+//Helper for authorization
+const authorized = require('./authCheck')
+
+const mongoose = require('mongoose')
+if (!mongoose.connection.db) {
+    mongoose.connect('mongodb://localhost/cs591')
+}
+const db = mongoose.connection
+const Schema = mongoose.Schema
+const personSchema = new Schema({
+    name: String,
+    UID: String,
+    department: String,
+    // longi: String,
+    // lati: String
+})
+const people = mongoose.model('people', personSchema)
+
+
+// POST Create a new user (only available to logged-in users)
+router.post('/db', authorized, function (req, res, next) {
+    aPerson = new people(
+        req.body
+    )
+    aPerson.save(function (err) {
+        if (err) {
+            res.send(err)
+        }
+        //send back the new person
+        else {
+            res.send(aPerson)
+        }
+    })
+})
+////////////////////////////////////////
+
+
 
 /* POST to Add User Service */
 router.post('/adduser', function(req, res) {
@@ -159,17 +200,17 @@ router.post('/api', function (req,res) {
                 location: city,
                 price: price,
                 limit: '8',
-                Authorization: 'Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx',
+                Authorization: ylp.Authorization,
                 sort_by: 'distance' },
         headers:
             { 'postman-token': '47e93a17-4c85-2e8d-322d-da1fd096ffd6',
                 'cache-control': 'no-cache',
-                authorization: 'Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx',
+                authorization: ylp.Authorization,
                 'content-type': 'application/x-www-form-urlencoded' },
         form:
             { grant_type: 'client_credentials',
-                client_id: 'PzpjyQJCJ4fgBEffx81t6g',
-                client_secret: 'kKlSrRpFaiOLZKeObOvjOUST89cZdWqRa8LsC8FVdhdGZZQChZIODhkT6C2iAxs1' } };
+                client_id: ylp.client_id,
+                client_secret: ylp.client_secret } };
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
@@ -239,5 +280,73 @@ router.get('/userlist', function(req, res) {
     });
 });
 
+
+
+//////////////////////////////////////////////
+//Sibo's OAuth part
+//GET Fetch all users
+router.get('/db', function (req, res, next) {
+    people.find({}, function (err, results) {
+        res.json(results)
+    })
+
+})
+
+
+router.get('/db/:name', function (req, res, next) {
+    findByName(req.params.name)
+        .then(function (status) {
+            res.json(status)
+        })
+        .catch(function (status) {
+            res.json(status)
+
+        })
+})
+
+//PUT Update the specified user's name
+router.put('/db/:_id', function (req, res, next) {
+    people.findByIdAndUpdate(req.params._id, req.body, {'upsert': 'true'}, function (err, result) {
+        if (err) {
+            res.json({message: 'Error updating'})
+        }
+        else {
+            console.log('updated')
+            res.json({message: 'success'})
+        }
+
+    })
+
+})
+
+
+//DELETE Delete the specified user
+router.delete('/db/:_id', function (req, res, next) {
+    people.findByIdAndRemove(req.params._id, function (err, result) {
+        if (err) {
+            res.json({message: 'Error deleting'})
+        }
+        else {
+            res.json({message: 'success'})
+        }
+    })
+})
+
+
+let findByName = function (checkName) {
+    return new Promise(function (resolve, reject) {
+        people.find({name: checkName}, function (err, results) {
+            console.log(results, results.length)
+            if (results.length > 0) {
+                resolve({found: results})
+            }
+            else {
+                reject({found: false})
+            }
+//    return ( (results.length  > 0) ? results : false)
+        })
+    })
+}
+///////////////////////////////////////////
 
 module.exports = router;
