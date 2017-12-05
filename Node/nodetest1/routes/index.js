@@ -118,15 +118,34 @@ router.post('/api', function (req,res) {
     var evt_des = [];               //Event description
     var evt_str = [];               //Event start time
     var evt_url = [];               //Event url
+    var count = 0;
+    var db = req.db;
+    var collection = db.get('lastEventBriteResults');
+    collection.drop;
+    var new_collection = db.get('lastEventBriteResults');
+
+
     request(api_call, {json:true}, function(error,response,body) {
         if (!error && response.statusCode == 200){
             for (let item of body.events) {             //for loop append each particular value into variables
-                evt_name.push(item.name.text);
-                evt_venue.push(item.venue_id);
-                // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
-                evt_des.push(item.description.text);
-                evt_str.push(item.start.local);
-                evt_url.push(item.url);
+                // evt_name.push(item.name.text);
+                // evt_venue.push(item.venue_id);
+                // // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
+                // evt_des.push(item.description.text);
+                // evt_str.push(item.start.local);
+                // evt_url.push(item.url);
+                var entry = {};
+                entry['event_name'] = item.name.text;
+                entry['event_venue'] = item.venue_id;
+                entry['event_desc'] = item.description.text;
+                entry["event_start"] = item.start.local;
+                entry["event_link"] = item.url;
+                new_collection.insert(entry);
+
+                count ++;
+                if (count == 6){
+                    break;
+                }
 
             }
             // console.log(evt_logo)                //console for testing output of particular variables
@@ -137,6 +156,9 @@ router.post('/api', function (req,res) {
     });
     //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&Authorization=Bearer2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
     //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&limit=8&Authorization=Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
+    var collection_yelp = db.get('lastYelpResults');
+    collection_yelp.drop;
+    var new_collection_yelp = db.get('lastYelpResults');
     var options = { method: 'GET',
         url: 'https://api.yelp.com/v3/businesses/search',
         qs:
@@ -156,23 +178,24 @@ router.post('/api', function (req,res) {
                 client_id: 'PzpjyQJCJ4fgBEffx81t6g',
                 client_secret: 'kKlSrRpFaiOLZKeObOvjOUST89cZdWqRa8LsC8FVdhdGZZQChZIODhkT6C2iAxs1' } };
 
-
-    var evt_name_yelp = [];              //Event Name
-    var evt_venue_yelp = [];             //Event venue id
-    // var evt_logo = [];              //Event logo
-    var evt_catgr_yelp = [];               //Event description
-    var evt_rating_yelp = [];               //Event start time
-    var evt_url_yelp = [];               //Event url
     request(options, function (error, response, body) {
         if (error) throw new Error(error)
     {
             for (let item of body) {             //for loop append each particular value into variables
-                evt_name_yelp.push(item.name);
-                evt_venue_yelp.push(item.location);
-                // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
-                evt_catgr_yelp.push(item.categories);
-                evt_rating_yelp.push(item.rating);
-                evt_url_yelp.push(item.image_url);
+                // evt_name_yelp.push(item.name);
+                // evt_venue_yelp.push(item.location);
+                // // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
+                // evt_catgr_yelp.push(item.categories);
+                // evt_rating_yelp.push(item.rating);
+                // evt_url_yelp.push(item.image_url);
+                var entry = {};
+                entry['yelp_name'] = item.name;
+                entry['yelp_venue'] = item.location;
+                entry['yelp_category'] = item.categories;
+                entry["yelp_rating"] = item.rating;
+                entry["yelp_image"] = item.image_url;
+                new_collection_yelp.insert(entry);
+
 
             }
             // console.log(evt_logo)                //console for testing output of particular variables
