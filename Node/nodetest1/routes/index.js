@@ -164,12 +164,17 @@ router.post('/api', function (req,res) {
         // from the request, write the first 5 elements to mongodb
         // store name, venue id, logo (original), description(text) start(local time) and url
 
-        var evt_name = [];              //Event Name
-        var evt_venue = [];             //Event venue id
+        // var evt_name = [];              //Event Name
+        // var evt_venue = [];             //Event venue id
         // var evt_logo = [];              //Event logo, gave up this variable because of its supernatural bug
-        var evt_des = [];               //Event description
-        var evt_str = [];               //Event start time
-        var evt_url = [];               //Event url
+        // var evt_des = [];               //Event description
+        // var evt_str = [];               //Event start time
+        // var evt_url = [];               //Event url
+
+        function isDefined(x) {
+            var undefined;
+            return x !== undefined;
+        }
         var count = 0;
         var collection = db.get('lastEventBriteResults');
         collection.drop();
@@ -180,16 +185,24 @@ router.post('/api', function (req,res) {
             if (!error && response.statusCode == 200){
                 for (let item of body.events) {             //for loop append each particular value into variables
 
-                    var entry = {};
-                    entry['event_name'] = item.name.text;
-                    entry['event_venue'] = item.venue_id;
-                    entry['event_desc'] = item.description.text;
-                    entry["event_start"] = item.start.local;
-                    entry['event_start'] = entry['event_start'].substring(0,10);
-                    entry['event_start'] = entry['event_start'].replace('-',"/");
-                    entry['event_start'] = entry['event_start'].replace('-',"/");
-                    entry["event_link"] = item.url;
-                    new_collection.insert(entry);
+                    var data = eval(item.logo)
+                    var myJSON = JSON.stringify(data);
+                    var obj = JSON.parse(myJSON);
+                    if(obj && isDefined(obj.original)) {
+                        var entry = {};
+                        entry['event_name'] = item.name.text;
+                        entry['event_venue'] = item.venue_id;
+                        entry['event_desc'] = item.description.text;
+                        entry["event_start"] = item.start.local;
+                        entry["event_start"] = entry["event_start"].substring(0,10);
+                        entry["event_start"] = entry["event_start"].replace('-','/');
+                        entry["event_start"] = entry["event_start"].replace('-','/');
+                        entry["event_link"] = item.url;
+                        entry["event_logo_url"] = obj.original.url;
+                        new_collection.insert(entry);
+                    }
+
+
 
                     count ++;
                     if (count == 6){

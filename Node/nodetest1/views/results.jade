@@ -38,8 +38,10 @@ html
                 each result, i in event_docs
                     li
                         .card.small.event
-                            span.card-title.title.event
-                                a.event(href=result.event_link)=result.event_name
+                            .card-image
+                                img(src=result.event_logo_url, alt='')
+                                span.card-title.title.result
+                                    a.result(href=result.event_url)=result.event_name
                             .card-content
                                 p=result.event_start
 
