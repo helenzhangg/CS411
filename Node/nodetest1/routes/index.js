@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const request = require('request');
+const evtbrt = require('../config/Eventbrite')
 
 
 // var request = require('request');
@@ -93,7 +94,7 @@ router.post('/api', function (req,res) {
     var results = [state, city, price];
 
     // EVENTBRITE API CALL
-    var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token=UR24GALENHRRPDT5BSZ3';
+    var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token='+evtbrt.Token;
     var location = '&location.address=' +city + ',' + state + '.' + zip;
     
     // add 'price' to api_call
@@ -113,7 +114,7 @@ router.post('/api', function (req,res) {
 
     var evt_name = [];              //Event Name
     var evt_venue = [];             //Event venue id
-    // var evt_logo = [];              //Event logo
+    // var evt_logo = [];              //Event logo, gave up this variable because of its supernatural bug
     var evt_des = [];               //Event description
     var evt_str = [];               //Event start time
     var evt_url = [];               //Event url
