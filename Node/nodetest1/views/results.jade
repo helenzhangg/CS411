@@ -2,11 +2,16 @@ extends layout
 
 block content
     h1.
-        EventBrite Results
+        Results
     ul
 
-        each user, i in docs2
+        each result, i in yelp_docs
             li
-                p=user.yelp_name
+                p=result.yelp_name
+                br
+        hr
+        each result, i in event_docs
+            li
+                p=result.event_name
                 br
 

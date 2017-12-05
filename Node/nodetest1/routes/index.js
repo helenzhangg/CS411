@@ -131,140 +131,205 @@ router.post('/api', function (req,res) {
     var zip = req.body.zip;
     var price = req.body.pricechoice;
     var activity = req.body.activitychoice;
+    var db = req.db;
     console.log('check the post', state, city, price, activity);
     var results = [state, city, price];
 
-    // EVENTBRITE API CALL
-    var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token='+evtbrt.Token;
-    var location = '&location.address=' +city + ',' + state + '.' + zip;
-    
-    // add 'price' to api_call
-    // if price = 1 or 2 use price = 'free'
-    if (price==1 | price ==2){
-        var api_price = '&price=free';
-    }
-    // if price = 3 or 4 use price = 'paid'
-    if (price==3 | price==4){
-        var api_price = '&price=paid';
-    }
-    var api_call = url_stem+api_price+location;
-    console.log(api_call);
 
-    // from the request, write the first 5 elements to mongodb
-    // store name, venue id, logo (original), description(text) start(local time) and url
+    // function thenRedirectToResults() {
 
-    var evt_name = [];              //Event Name
-    var evt_venue = [];             //Event venue id
-    // var evt_logo = [];              //Event logo, gave up this variable because of its supernatural bug
-    var evt_des = [];               //Event description
-    var evt_str = [];               //Event start time
-    var evt_url = [];               //Event url
-    var count = 0;
-    var db = req.db;
-    var collection = db.get('lastEventBriteResults');
-    collection.drop();
-    var new_collection = db.get('lastEventBriteResults');
+    // }
+
+        // thenRedirectToResults();
+    // }
 
 
-    request(api_call, {json:true}, function(error,response,body) {
-        if (!error && response.statusCode == 200){
-            for (let item of body.events) {             //for loop append each particular value into variables
+    function callEventsFirst(){
+        // EVENTBRITE API CALL
+        var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token='+evtbrt.Token;
+        var location = '&location.address=' +city + ',' + state + '.' + zip;
 
-                var entry = {};
-                entry['event_name'] = item.name.text;
-                entry['event_venue'] = item.venue_id;
-                entry['event_desc'] = item.description.text;
-                entry["event_start"] = item.start.local;
-                entry["event_link"] = item.url;
-                new_collection.insert(entry);
+        // add 'price' to api_call
+        // if price = 1 or 2 use price = 'free'
+        if (price==1 | price ==2){
+            var api_price = '&price=free';
+        }
+        // if price = 3 or 4 use price = 'paid'
+        if (price==3 | price==4){
+            var api_price = '&price=paid';
+        }
+        var api_call = url_stem+api_price+location;
+        console.log(api_call);
 
-                count ++;
-                if (count == 6){
-                    break;
+        // from the request, write the first 5 elements to mongodb
+        // store name, venue id, logo (original), description(text) start(local time) and url
+
+        var evt_name = [];              //Event Name
+        var evt_venue = [];             //Event venue id
+        // var evt_logo = [];              //Event logo, gave up this variable because of its supernatural bug
+        var evt_des = [];               //Event description
+        var evt_str = [];               //Event start time
+        var evt_url = [];               //Event url
+        var count = 0;
+        var collection = db.get('lastEventBriteResults');
+        collection.drop();
+        var new_collection = db.get('lastEventBriteResults');
+
+
+        request(api_call, {json:true}, function(error,response,body) {
+            if (!error && response.statusCode == 200){
+                for (let item of body.events) {             //for loop append each particular value into variables
+
+                    var entry = {};
+                    entry['event_name'] = item.name.text;
+                    entry['event_venue'] = item.venue_id;
+                    entry['event_desc'] = item.description.text;
+                    entry["event_start"] = item.start.local;
+                    entry["event_link"] = item.url;
+                    new_collection.insert(entry);
+
+                    count ++;
+                    if (count == 6){
+                        break;
+                    }
+
                 }
 
+
+
+
+                {
+                    var collection_yelp = db.get('lastYelpResults');
+                    collection_yelp.drop();
+                    var new_collection_yelp = db.get('lastYelpResults');
+                    var options = {
+                        method: 'GET',
+                        url: 'https://api.yelp.com/v3/businesses/search',
+                        qs:
+                            {
+                                term: activity,
+                                location: city,
+                                price: price,
+                                limit: '8',
+                                Authorization: ylp.Authorization,
+                                sort_by: 'distance'
+                            },
+                        headers:
+                            {
+                                'postman-token': '47e93a17-4c85-2e8d-322d-da1fd096ffd6',
+                                'cache-control': 'no-cache',
+                                authorization: ylp.Authorization,
+                                'content-type': 'application/x-www-form-urlencoded'
+                            },
+                        form:
+                            {
+                                grant_type: 'client_credentials',
+                                client_id: ylp.client_id,
+                                client_secret: ylp.client_secret
+                            }
+                    };
+
+                    request(options, function (error, response, body) {
+                        if (error) throw new Error(error);
+                        {
+
+                            var obj = JSON.parse(body);
+                            for (let item of obj['businesses']) {             //for loop append each particular value into variables
+
+                                var entry = {};
+
+                                entry['yelp_name'] = item.name;
+                                entry['yelp_venue'] = item.location;
+                                entry['yelp_category'] = item.categories;
+                                entry["yelp_rating"] = item.rating;
+                                entry["yelp_image"] = item.image_url;
+                                new_collection_yelp.insert(entry);
+
+                            }
+
+
+                            res.redirect('results');
+
+
+
+
+                            // console.log(options);                // uncomment to check yelp call
+                            // console.log(evt_logo)                //console for testing output of particular variables
+                        }
+                        if (error) {
+                            return console.log(error);
+                        }
+                        // console.log(body.url);
+                        // console.log(body.explanation);
+                        // console.log(obj);
+                    });
+                }
+
+
+
+
+
+                // console.log(evt_logo)                //console for testing output of particular variables
             }
-            // console.log(evt_logo)                //console for testing output of particular variables
-        }
-        if (error) { return console.log(error); }
-        // console.log(body.url);
-        // console.log(body.explanation);
-    });
-    var collection_yelp = db.get('lastYelpResults');
-    collection_yelp.drop();
-    var new_collection_yelp = db.get('lastYelpResults');
-    var options = { method: 'GET',
-        url: 'https://api.yelp.com/v3/businesses/search',
-        qs:
-            { term: activity,
-                location: city,
-                price: price,
-                limit: '8',
-                Authorization: ylp.Authorization,
-                sort_by: 'distance' },
-        headers:
-            { 'postman-token': '47e93a17-4c85-2e8d-322d-da1fd096ffd6',
-                'cache-control': 'no-cache',
-                authorization: ylp.Authorization,
-                'content-type': 'application/x-www-form-urlencoded' },
-        form:
-            { grant_type: 'client_credentials',
-                client_id: ylp.client_id,
-                client_secret: ylp.client_secret } };
+            if (error) { return console.log(error); }
+            // console.log(body.url);
+            // console.log(body.explanation);
+        });
 
-    request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-    {
-        console.log('TYPE TEST BELOW ')
-        console.log(typeof(body));
-        var obj = JSON.parse(body);
-        console.log(typeof(obj));
-            for (let item of obj['businesses']) {             //for loop append each particular value into variables
-        // for (var i = 0, len = 7; i < len; i++) {
-            //console.log(obj.data[i].name);b
+        // callback();
+    }
 
-        // for(i=0;i<8;i++){
-              var entry = {};
-
-              // entry['yelp_name'] = body.businesses[i].name;
-
-                entry['yelp_name'] = item.name;
-                entry['yelp_venue'] = item.location;
-                entry['yelp_category'] = item.categories;
-                entry["yelp_rating"] = item.rating;
-                entry["yelp_image"] = item.image_url;
-                new_collection_yelp.insert(entry);
-
-
-            }
-            console.log(options);
-            res.redirect('results');
-            // console.log(evt_logo)                //console for testing output of particular variables
-        }
-        if (error) { return console.log(error); }
-        // console.log(body.url);
-        // console.log(body.explanation);
-        console.log(obj);
-    });
-
-
+callEventsFirst();
+    // callEventsFirst(thenCallYelp);
+    // thenCallYelp(thenRedirectToResults());
 
 });
 
 /* GET Results page. */
 router.get('/results', function(req, res) {
     var db = req.db;
-    // var collection = db.get('lastEventBriteResults');
-    // collection.find({},{},function(e,docs){
-    //     res.render('results', {
-    //         "docs" : docs});
-    // });
+    var event_brite_docs = {};
+    var yelp_docs = {};
 
-    var collection2 = db.get('lastYelpResults');
-    collection2.find({},{},function(e,docs){
-        res.render('results', {
-            "docs2" : docs});
-    });
+    function doEventsFirst(callback){
+        var collection = db.get('lastEventBriteResults');
+        collection.find({},{},function(e,docs){
+
+            console.log('STEP 1');
+
+            console.log('FOLLOWING IS EVENT BRITE COPY');
+            event_brite_docs = docs;
+            console.log(event_brite_docs);
+        });
+
+        var collection2 = db.get('lastYelpResults');
+        collection2.find({},{},function(e,docs){
+
+            console.log('STEP 2');
+            console.log('THE FOLLOWING IS YELP-DOCS COPY');
+            yelp_docs=docs;
+            console.log(yelp_docs);
+
+            // loading page
+            console.log('STEP 3');
+            console.log('FOLLOWING IS EVENT_DOCS AND YELP_DOCS');
+            console.log(event_brite_docs);
+            console.log(yelp_docs);
+
+            res.render('results',{
+                "event_docs" :event_brite_docs,
+                "yelp_docs": yelp_docs});
+        });
+
+
+        // thenYelpEvents(lastRenderPage);
+    }
+
+//    call the functions in the correct order, so results loads once all async. stuff is done
+
+    doEventsFirst();
+    // doEventsFirst(thenYelpEvents);
+    // thenYelpEvents(lastRenderPage());
 
 });
 
@@ -336,7 +401,7 @@ router.delete('/db/:_id', function (req, res, next) {
 let findByName = function (checkName) {
     return new Promise(function (resolve, reject) {
         people.find({name: checkName}, function (err, results) {
-            console.log(results, results.length)
+            // console.log(results, results.length);
             if (results.length > 0) {
                 resolve({found: results})
             }
