@@ -135,21 +135,42 @@ router.post('/api', function (req,res) {
         // console.log(body.url);
         // console.log(body.explanation);
     });
-    var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&Authorization=Bearer2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
-    console.log(url_yelp);
+    //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&Authorization=Bearer2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
+    //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&limit=8&Authorization=Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
+    var options = { method: 'GET',
+        url: 'https://api.yelp.com/v3/businesses/search',
+        qs:
+            { term: activity,
+                location: city,
+                price: price,
+                limit: '8',
+                Authorization: 'Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx',
+                sort_by: 'distance' },
+        headers:
+            { 'postman-token': '47e93a17-4c85-2e8d-322d-da1fd096ffd6',
+                'cache-control': 'no-cache',
+                authorization: 'Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx',
+                'content-type': 'application/x-www-form-urlencoded' },
+        form:
+            { grant_type: 'client_credentials',
+                client_id: 'PzpjyQJCJ4fgBEffx81t6g',
+                client_secret: 'kKlSrRpFaiOLZKeObOvjOUST89cZdWqRa8LsC8FVdhdGZZQChZIODhkT6C2iAxs1' } };
+
+
     var evt_name_yelp = [];              //Event Name
     var evt_venue_yelp = [];             //Event venue id
     // var evt_logo = [];              //Event logo
     var evt_catgr_yelp = [];               //Event description
     var evt_rating_yelp = [];               //Event start time
     var evt_url_yelp = [];               //Event url
-    request(url_yelp, {json:true}, function(error,response,body) {
-        if (!error && response.statusCode == 200){
-            for (let item of body.events) {             //for loop append each particular value into variables
-                evt_name_yelp.push(item.name.text);
-                evt_venue_yelp.push(item.location.display_address);
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error)
+    {
+            for (let item of body) {             //for loop append each particular value into variables
+                evt_name_yelp.push(item.name);
+                evt_venue_yelp.push(item.location);
                 // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
-                evt_catgr_yelp.push(item.categories.title;
+                evt_catgr_yelp.push(item.categories);
                 evt_rating_yelp.push(item.rating);
                 evt_url_yelp.push(item.image_url);
 
@@ -159,7 +180,10 @@ router.post('/api', function (req,res) {
         if (error) { return console.log(error); }
         // console.log(body.url);
         // console.log(body.explanation);
+        console.log(body);
     });
+
+
 
 });
 
