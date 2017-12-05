@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1.
+        EventBrite Results
+    ul
+
+        each user, i in docs2
+            li
+                p=user.yelp_name
+                br
+

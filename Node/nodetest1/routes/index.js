@@ -121,19 +121,14 @@ router.post('/api', function (req,res) {
     var count = 0;
     var db = req.db;
     var collection = db.get('lastEventBriteResults');
-    collection.drop;
+    collection.drop();
     var new_collection = db.get('lastEventBriteResults');
 
 
     request(api_call, {json:true}, function(error,response,body) {
         if (!error && response.statusCode == 200){
             for (let item of body.events) {             //for loop append each particular value into variables
-                // evt_name.push(item.name.text);
-                // evt_venue.push(item.venue_id);
-                // // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
-                // evt_des.push(item.description.text);
-                // evt_str.push(item.start.local);
-                // evt_url.push(item.url);
+
                 var entry = {};
                 entry['event_name'] = item.name.text;
                 entry['event_venue'] = item.venue_id;
@@ -154,10 +149,8 @@ router.post('/api', function (req,res) {
         // console.log(body.url);
         // console.log(body.explanation);
     });
-    //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&Authorization=Bearer2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
-    //var url_yelp = 'https://api.yelp.com/v3/businesses/search?term=' + activity + '&location='+ city +'&price=' + price + '&limit=8&Authorization=Bearer 2rrk6a3kWZLBoZs2d1AVDu3ui3FEVX0trMCDwSzJm7CLE1julO2TBszCxlQCL3siV34fBvPFjL2E08dwwXNCGL3QRibByfKMj3wTXBZJ2oP2uPIG8XYN_0EOzrvyWXYx&sort_by=distance';
     var collection_yelp = db.get('lastYelpResults');
-    collection_yelp.drop;
+    collection_yelp.drop();
     var new_collection_yelp = db.get('lastYelpResults');
     var options = { method: 'GET',
         url: 'https://api.yelp.com/v3/businesses/search',
@@ -179,16 +172,21 @@ router.post('/api', function (req,res) {
                 client_secret: 'kKlSrRpFaiOLZKeObOvjOUST89cZdWqRa8LsC8FVdhdGZZQChZIODhkT6C2iAxs1' } };
 
     request(options, function (error, response, body) {
-        if (error) throw new Error(error)
+        if (error) throw new Error(error);
     {
-            for (let item of body) {             //for loop append each particular value into variables
-                // evt_name_yelp.push(item.name);
-                // evt_venue_yelp.push(item.location);
-                // // evt_logo.push(item.logo.original);               //supernatural bug, cannot help with it
-                // evt_catgr_yelp.push(item.categories);
-                // evt_rating_yelp.push(item.rating);
-                // evt_url_yelp.push(item.image_url);
-                var entry = {};
+        console.log('TYPE TEST BELOW ')
+        console.log(typeof(body));
+        var obj = JSON.parse(body);
+        console.log(typeof(obj));
+            for (let item of obj['businesses']) {             //for loop append each particular value into variables
+        // for (var i = 0, len = 7; i < len; i++) {
+            //console.log(obj.data[i].name);b
+
+        // for(i=0;i<8;i++){
+              var entry = {};
+
+              // entry['yelp_name'] = body.businesses[i].name;
+
                 entry['yelp_name'] = item.name;
                 entry['yelp_venue'] = item.location;
                 entry['yelp_category'] = item.categories;
@@ -198,21 +196,36 @@ router.post('/api', function (req,res) {
 
 
             }
+            console.log(options);
+            res.redirect('results');
             // console.log(evt_logo)                //console for testing output of particular variables
         }
         if (error) { return console.log(error); }
         // console.log(body.url);
         // console.log(body.explanation);
-        console.log(body);
+        console.log(obj);
     });
 
 
 
 });
 
+/* GET Results page. */
+router.get('/results', function(req, res) {
+    var db = req.db;
+    // var collection = db.get('lastEventBriteResults');
+    // collection.find({},{},function(e,docs){
+    //     res.render('results', {
+    //         "docs" : docs});
+    // });
 
+    var collection2 = db.get('lastYelpResults');
+    collection2.find({},{},function(e,docs){
+        res.render('results', {
+            "docs2" : docs});
+    });
 
-
+});
 
 
 /* GET Userlist page. */
