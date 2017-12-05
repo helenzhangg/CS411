@@ -210,7 +210,7 @@ router.post('/api', function (req,res) {
                                 term: activity,
                                 location: city,
                                 price: price,
-                                limit: '8',
+                                limit: '12',
                                 Authorization: ylp.Authorization,
                                 sort_by: 'distance'
                             },
@@ -239,8 +239,15 @@ router.post('/api', function (req,res) {
                                 var entry = {};
 
                                 entry['yelp_name'] = item.name;
-                                entry['yelp_venue'] = item.location;
-                                entry['yelp_category'] = item.categories;
+
+                                entry['yelp_venue'] = '';
+                                for (i=0;i< item.location.display_address.length;i++){
+                                    entry['yelp_venue'] = entry['yelp_venue'] + ' ' + item.location.display_address[i];
+                                }
+                                entry['yelp_url'] = item.url;
+
+
+                                entry['yelp_category'] = item.categories[0].title;
                                 entry["yelp_rating"] = item.rating;
                                 entry["yelp_image"] = item.image_url;
                                 new_collection_yelp.insert(entry);
@@ -303,10 +310,13 @@ router.get('/results', function(req, res) {
         });
 
         var collection2 = db.get('lastYelpResults');
-        collection2.find({},{},function(e,docs){
+        collection2.find({'yelp_image':{$ne:""}},{}, function(e, docs){
+        // collection2.find({},{},function(e,docs){
 
             console.log('STEP 2');
             console.log('THE FOLLOWING IS YELP-DOCS COPY');
+
+
             yelp_docs=docs;
             console.log(yelp_docs);
 
@@ -315,6 +325,8 @@ router.get('/results', function(req, res) {
             console.log('FOLLOWING IS EVENT_DOCS AND YELP_DOCS');
             console.log(event_brite_docs);
             console.log(yelp_docs);
+
+
 
             res.render('results',{
                 "event_docs" :event_brite_docs,

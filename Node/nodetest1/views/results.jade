@@ -1,17 +1,37 @@
 extends layout
 
-block content
-    h1.
-        Results
-    ul
+doctype html
+html
+    head
+    body
 
-        each result, i in yelp_docs
-            li
-                p=result.yelp_name
-                br
-        hr
-        each result, i in event_docs
-            li
-                p=result.event_name
-                br
+        block content
+            .col.s12.m4
+                .card.shadow.blue.lighten-5#wokucard
+                    .card-content.black-text
+                        span.card-title.title Woku
+                        hr
+                        img#woku(src='/images/woku.png', alt='')
+                        br
+                        div.typed_wrap
+                            span.typed
+                        br
+                        button.button#go
+                            span New Search
+            h1#places Nearby Places
+            ul.results
+                each result, i in yelp_docs
+                    li
+                        .card.small.result
+                            .card-image
+                                img(src=result.yelp_image, alt='')
+                                span.card-title.title.result
+                                    a.result(href=result.yelp_url)=result.yelp_name
+                            .card-content
+                                p.address=result.yelp_venue
+                                p.category=result.yelp_category
+
+
+
+
 
