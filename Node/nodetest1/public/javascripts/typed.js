@@ -51,3 +51,10 @@ $(function(){
 //         $("#activity").fadeIn("slow",function(){});
 //     });
 // });
+
+
+
+//
+// br
+// button.button#go
+// span Let's Go!
