@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc0e60c4-116e-4326-acad-5ee60c6af350" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/collection-317--816087567947215153.wt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/collection-319--816087567947215153.wt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/diagnostic.data/metrics.interim" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/index-318--816087567947215153.wt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/index-320--816087567947215153.wt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/collection-321--816087567947215153.wt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/collection-323--816087567947215153.wt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/index-322--816087567947215153.wt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Node/nodetest1/data/index-324--816087567947215153.wt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/WiredTiger.wt" afterPath="$PROJECT_DIR$/Node/nodetest1/data/WiredTiger.wt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/_mdb_catalog.wt" afterPath="$PROJECT_DIR$/Node/nodetest1/data/_mdb_catalog.wt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/diagnostic.data/metrics.2017-12-05T05-03-09Z-00000" afterPath="$PROJECT_DIR$/Node/nodetest1/data/diagnostic.data/metrics.2017-12-05T05-03-09Z-00000" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/diagnostic.data/metrics.interim" afterPath="$PROJECT_DIR$/Node/nodetest1/data/diagnostic.data/metrics.interim" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/journal/WiredTigerLog.0000000003" afterPath="$PROJECT_DIR$/Node/nodetest1/data/journal/WiredTigerLog.0000000003" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/sizeStorer.wt" afterPath="$PROJECT_DIR$/Node/nodetest1/data/sizeStorer.wt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/data/WiredTiger.turtle" afterPath="$PROJECT_DIR$/Node/nodetest1/data/WiredTiger.turtle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/public/javascripts/typed.js" afterPath="$PROJECT_DIR$/Node/nodetest1/public/javascripts/typed.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/public/stylesheets/main.css" afterPath="$PROJECT_DIR$/Node/nodetest1/public/stylesheets/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node/nodetest1/views/index.jade" afterPath="$PROJECT_DIR$/Node/nodetest1/views/index.jade" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -301,12 +298,12 @@
       <option name="presentableId" value="Default" />
       <updated>1512449311127</updated>
       <workItem from="1512449312759" duration="1779000" />
-      <workItem from="1512451296381" duration="23777000" />
+      <workItem from="1512451296381" duration="23911000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25556000" />
+    <option name="totallyTimeSpent" value="25690000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
