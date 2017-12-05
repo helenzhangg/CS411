@@ -1,7 +1,7 @@
 
 
 $(function(){
-	$(".typed").typed({
+	$("#start").typed({
 		strings: ["Hello, I'm Woku :)", "I can help you explore places.", "Just put in your budget, location, and activity to start!", "Try me out :)"],
         // strings: ["Hello, I'm Woku :)"],
 		// Optionally use an HTML element to grab strings from (must wrap each string in a <p>)

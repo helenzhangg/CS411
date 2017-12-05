@@ -14,11 +14,12 @@ html
                         img#woku(src='/images/woku.png', alt='')
                         br
                         div.typed_wrap
-                            span.typed
+                            span.typed#result
                         br
-                        button.button#go
+                        button.button#newsearch
                             span New Search
-            h1#places Nearby Places
+
+            h1.places Nearby Places
             ul.results
                 each result, i in yelp_docs
                     li
@@ -31,7 +32,14 @@ html
                                 p.address=result.yelp_venue
                                 p.category=result.yelp_category
 
-
+            h1.places Nearby Events
+            ul.results
+                each result, i in event_docs
+                    li
+                        .card.small.result
+                            span.card-title.title.result=result.event_name
+                            .card-content
+                                p=result.event_start
 
 
 

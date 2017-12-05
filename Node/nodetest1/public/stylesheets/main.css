@@ -440,7 +440,7 @@ p.category{
     color:white;
 }
 
-h1#places{
+h1.places{
     background: rgba(0,0,0,.6);
     color:white;
     text-align: left;
