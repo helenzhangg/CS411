@@ -16,8 +16,9 @@ html
                         div.typed_wrap
                             span.typed#result
                         br
-                        button.button#newsearch
-                            span New Search
+                        form(action='http://localhost:3000')
+                            button.button#newsearch(type='submit')
+                                span New Search
 
             h1.places Nearby Places
             ul.results
@@ -36,10 +37,12 @@ html
             ul.results
                 each result, i in event_docs
                     li
-                        .card.small.result
-                            span.card-title.title.result=result.event_name
+                        .card.small.event
+                            span.card-title.title.event
+                                a.event(href=result.event_link)=result.event_name
                             .card-content
                                 p=result.event_start
+
 
 
 

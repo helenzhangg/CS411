@@ -2,7 +2,7 @@
 
 $(function(){
     $("#result").typed({
-        strings: ["Here are some results I found... I hope I helped!", "Feel free to do a new search :)"],
+        strings: ["Here are some results I found...", "Feel free to do a new search :)"],
         // strings: ["Hello, I'm Woku :)"],
         // Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
         stringsElement: null,
@@ -37,8 +37,9 @@ $(function(){
     });
 });
 
-$("#newsearch").click(function(){
-    document.location.href= history.back();
-    // history.back();
-});
-
+// $(document).ready(function() {
+//     $("#newsearch").click(function () {
+//         document.location.href = 'http://localhost:3000';
+//     });
+//
+// }

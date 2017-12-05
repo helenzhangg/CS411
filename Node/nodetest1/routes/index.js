@@ -185,6 +185,9 @@ router.post('/api', function (req,res) {
                     entry['event_venue'] = item.venue_id;
                     entry['event_desc'] = item.description.text;
                     entry["event_start"] = item.start.local;
+                    entry['event_start'] = entry['event_start'].substring(0,10);
+                    entry['event_start'] = entry['event_start'].replace('-',"/");
+                    entry['event_start'] = entry['event_start'].replace('-',"/");
                     entry["event_link"] = item.url;
                     new_collection.insert(entry);
 
