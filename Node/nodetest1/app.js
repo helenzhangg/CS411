@@ -17,7 +17,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 //Oauth
-const auth = require('./routes/authTwitter')
+const auth = require('./routes/TwitterOauth')
 
 
 var app = express();
