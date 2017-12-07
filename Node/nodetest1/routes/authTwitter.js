@@ -82,7 +82,7 @@ router.get('/twitter',
 //OAuth Step 2
 router.get('/callback',
     passport.authenticate('twitter',
-        {failureRedirect: '/login',}),
+        {failureRedirect: '/',}),
     function (req, res) {
         res.cookie('authStatus', 'true')
         res.redirect('/')
