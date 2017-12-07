@@ -149,6 +149,9 @@ router.post('/api', function (req,res) {
         var url_stem = 'https://www.eventbriteapi.com/v3/events/search/?token='+evtbrt.Token;
         var location = '&location.address=' +city + ',' + state + '.' + zip;
 
+        // var ven_api = 'https://www.eventbriteapi.com/v3/venues/21047555?token='+evtbrt.Token
+
+
         // add 'price' to api_call
         // if price = 1 or 2 use price = 'free'
         if (price==1 | price ==2){
@@ -159,7 +162,7 @@ router.post('/api', function (req,res) {
             var api_price = '&price=paid';
         }
         var api_call = url_stem+api_price+location;
-        console.log(api_call);
+        // console.log(api_call);
 
         // from the request, write the first 5 elements to mongodb
         // store name, venue id, logo (original), description(text) start(local time) and url
@@ -191,6 +194,16 @@ router.post('/api', function (req,res) {
                     if(obj && isDefined(obj.original)) {
                         var entry = {};
                         entry['event_name'] = item.name.text;
+                        //Here is the nested api call that I use to get event address from the venue id I just get from event search api
+                        var ven_api = 'https://www.eventbriteapi.com/v3/venues/'+item.venue_id+'?token='+evtbrt.Token
+                        request(ven_api, {json:true}, function(error,response,ven_body) {
+                            if (!error && response.statusCode == 200){
+                                var ven_address = ven_body.address.address_1+','+ven_body.address.city+','+ven_body.address.region+'.'+ven_body.address.postal_code;
+                                entry['event_address'] = ven_address
+                                console.log(ven_address);
+                            }
+                        })
+                        //////////////////////////////////////////////////////////////////////////////////////////////
                         entry['event_venue'] = item.venue_id;
                         entry['event_desc'] = item.description.text;
                         entry["event_start"] = item.start.local;
@@ -203,13 +216,14 @@ router.post('/api', function (req,res) {
                     }
 
 
-
                     count ++;
                     if (count == 6){
                         break;
                     }
 
                 }
+
+
 
 
 
@@ -318,29 +332,29 @@ router.get('/results', function(req, res) {
         var collection = db.get('lastEventBriteResults');
         collection.find({},{},function(e,docs){
 
-            console.log('STEP 1');
+            // console.log('STEP 1');
 
-            console.log('FOLLOWING IS EVENT BRITE COPY');
+            // console.log('FOLLOWING IS EVENT BRITE COPY');
             event_brite_docs = docs;
-            console.log(event_brite_docs);
+            // console.log(event_brite_docs);
         });
 
         var collection2 = db.get('lastYelpResults');
         collection2.find({'yelp_image':{$ne:""}},{}, function(e, docs){
         // collection2.find({},{},function(e,docs){
 
-            console.log('STEP 2');
-            console.log('THE FOLLOWING IS YELP-DOCS COPY');
+            // console.log('STEP 2');
+            // console.log('THE FOLLOWING IS YELP-DOCS COPY');
 
 
             yelp_docs=docs;
-            console.log(yelp_docs);
+            // console.log(yelp_docs);
 
             // loading page
-            console.log('STEP 3');
-            console.log('FOLLOWING IS EVENT_DOCS AND YELP_DOCS');
-            console.log(event_brite_docs);
-            console.log(yelp_docs);
+            // console.log('STEP 3');
+            // console.log('FOLLOWING IS EVENT_DOCS AND YELP_DOCS');
+            // console.log(event_brite_docs);
+            // console.log(yelp_docs);
 
 
 
