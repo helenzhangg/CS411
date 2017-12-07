@@ -453,23 +453,27 @@ h1.places{
     margin-bottom:0px;
 }
 
-.card-title.title.event
 
+
+.card-content.event{
+    height: 300px;
+}
 
 .card.small.event{
     background: darkslateblue;
     color:white;
 }
 
-.card.small.event:hover{
-    background: #2196f3;
-    color:white;
+.card.medium.event:hover{
+    color:whitesmoke;
     padding: .6em;
-    text-decoration: underline;
+    font-size: .9em;
+    box-shadow:0 18px 20px 0 rgba(0,0,0,0.25);
+    background:  #1976d2;
 }
 
 .card.event{
-    background: darkslateblue;
+    background: #0d47a1 ;
     color:white;
     padding: .6em;
     font-size: .8em;
@@ -477,4 +481,22 @@ h1.places{
 
 a.event{
     color:white;
+    font-size: .8em;
+}
+
+a.event:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+span.card-title.welcome{
+    font-size: 1em;
+}
+p.welcome{
+    font-size: .5em;
+    color:gray;
+}
+
+a.welcome{
+    font-size: .4em;
 }

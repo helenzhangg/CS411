@@ -198,12 +198,14 @@ router.post('/api', function (req,res) {
                         var ven_api = 'https://www.eventbriteapi.com/v3/venues/'+item.venue_id+'?token='+evtbrt.Token
                         request(ven_api, {json:true}, function(error,response,ven_body) {
                             if (!error && response.statusCode == 200){
-                                var ven_address = ven_body.address.address_1+','+ven_body.address.city+','+ven_body.address.region+'.'+ven_body.address.postal_code;
-                                entry['event_address'] = ven_address
+                                var ven_address = ven_body.address.address_1+','+ven_body.address.city+','+ven_body.address.region+' '+ven_body.address.postal_code;
+                                entry['event_address'] = ven_address;
                                 console.log(ven_address);
+
+
                             }
                         })
-                        //////////////////////////////////////////////////////////////////////////////////////////////
+
                         entry['event_venue'] = item.venue_id;
                         entry['event_desc'] = item.description.text;
                         entry["event_start"] = item.start.local;
@@ -213,8 +215,8 @@ router.post('/api', function (req,res) {
                         entry["event_link"] = item.url;
                         entry["event_logo_url"] = obj.original.url;
                         new_collection.insert(entry);
+                        //////////////////////////////////////////////////////////////////////////////////////////////
                     }
-
 
                     count ++;
                     if (count == 6){
@@ -222,6 +224,7 @@ router.post('/api', function (req,res) {
                     }
 
                 }
+
 
 
 
@@ -301,10 +304,6 @@ router.post('/api', function (req,res) {
                         // console.log(obj);
                     });
                 }
-
-
-
-
 
                 // console.log(evt_logo)                //console for testing output of particular variables
             }

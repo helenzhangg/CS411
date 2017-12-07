@@ -15,7 +15,6 @@ html
                         br
                         div.typed_wrap
                             span.typed#result
-                        br
                         form(action='http://localhost:3000')
                             button.button#newsearch(type='submit')
                                 span New Search
@@ -37,14 +36,14 @@ html
             ul.results
                 each result, i in event_docs
                     li
-                        .card.small.event
-                            .card-image
+                        .card.medium.event
+                            .card-image.event
                                 img(src=result.event_logo_url, alt='')
-                                span.card-title.title.result
-                                    a.result(href=result.event_url)=result.event_name
-                            .card-content
+                            .card-content.event
+                                span.card-title.title.event
+                                    a.event(href=result.event_link)=result.event_name
                                 p=result.event_start
-                                //p=result.event_address
+                                p=result.event_address
 
 
 

@@ -1,4 +1,6 @@
 
+var logged_in = false;
+
 
 $(function(){
 	$("#start").typed({
@@ -34,6 +36,12 @@ $(function(){
 		onStringTyped: function() {},
 		// callback for reset
 		resetCallback: function() {}
+	});
+});
+
+$(document).ready(function(){
+	$("#logout").click(function(){
+        location.href = 'localhost:3000/welcome';
 	});
 });
 

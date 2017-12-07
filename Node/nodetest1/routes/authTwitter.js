@@ -71,7 +71,7 @@ router.get('/logout', function (req, res, next) {
             req.logOut()
             res.clearCookie()
             res.status = 401
-            res.redirect('/')
+            res.redirect('/welcome')
         })
 })
 
