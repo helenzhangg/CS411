@@ -27,7 +27,7 @@ html
                             .card-image
                                 img(src=result.yelp_image, alt='')
                                 span.card-title.title.result
-                                    a.result(href=result.yelp_url)=result.yelp_name
+                                    a.result(href=result.yelp_url target="_blank")=result.yelp_name
                             .card-content
                                 p.address=result.yelp_venue
                                 p.category=result.yelp_category
@@ -41,7 +41,7 @@ html
                                 img(src=result.event_logo_url, alt='')
                             .card-content.event
                                 span.card-title.title.event
-                                    a.event(href=result.event_link)=result.event_name
+                                    a.event(href=result.event_link target="_blank")=result.event_name
                                 p=result.event_start
                                 p=result.event_address
 
